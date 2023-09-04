@@ -19,4 +19,8 @@ const page = useRouteQuery('page', '1', { transform: Number }) // or transformin
 
 console.log(search.value) // route.query.search
 search.value = 'foobar' // router.replace({ query: { search: 'foobar' } })
+
+searchQuery.delete('search') // you can also delete the query parameter
+
+console.log(search.value) // => undefined
 ```

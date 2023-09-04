@@ -233,4 +233,27 @@ describe('useRouteQuery', () => {
     expect(page.value).toBe(2)
     expect(lang.value).toBe('en-US')
   })
+
+  it('should delete a query parameter', async () => {
+    let route = getRoute({
+      search: 'vue3',
+      page: '1',
+    })
+    const router = { replace: (r: any) => route = r } as any
+
+    const searchQuery = useRouteQuery('search', '', { route, router })
+
+    expect(searchQuery.value).toBe('vue3')
+
+    // Delete the query parameter
+    searchQuery.delete()
+
+    await nextTick()
+
+    // After deletion, the query parameter value should be an empty string
+    expect(searchQuery.value).toBe('')
+
+    // The route query should also be updated accordingly
+    expect(route.query.search).toBeUndefined()
+  })
 })

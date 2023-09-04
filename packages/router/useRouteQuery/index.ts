@@ -77,6 +77,24 @@ export function useRouteQuery<
           })
         })
       },
+      delete() {
+        _query.delete(name)
+
+        trigger()
+
+        nextTick(() => {
+          const { params, query, hash } = route
+
+          const newQuery = { ...query }
+          delete newQuery[name]
+
+          router[toValue(mode)]({
+            params,
+            query: newQuery,
+            hash,
+          })
+        })
+      },
     }
   })
 
